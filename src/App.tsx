@@ -105,17 +105,21 @@ export default function App() {
 
   const theme = THEMES[selectedAmbience];
 
-  // Detect and handle direct invite, privacy, and terms URLs (including hashes like #/invite, #/privacy, #/terms to ensure compatibility with GitHub Pages SPA routing)
+  // Detect and handle direct invite, privacy, and terms URLs (including hashes like #/invite, #invite, etc. to ensure compatibility with GitHub Pages SPA routing)
   useEffect(() => {
     const handleUrlRedirect = () => {
       const hash = window.location.hash.toLowerCase();
       const path = window.location.pathname.toLowerCase();
+      const fullUrl = window.location.href.toLowerCase();
       
+      // Check for invite
       if (
-        hash === "#/invite" || 
-        hash === "#invite" || 
-        path === "/invite" || 
-        path.endsWith("/invite")
+        hash.includes("invite") || 
+        path.endsWith("/invite") || 
+        path.endsWith("/invite/") ||
+        fullUrl.endsWith("/invite") ||
+        fullUrl.includes("#invite") ||
+        fullUrl.includes("#/invite")
       ) {
         setIsRedirecting(true);
         // Play win chime
@@ -125,22 +129,25 @@ export default function App() {
           window.location.href = INVITE_LINK;
         }, 800);
       } else if (
-        hash === "#/privacy" ||
-        hash === "#privacy" ||
-        path === "/privacy" ||
-        path.endsWith("/privacy")
+        hash.includes("privacy") ||
+        path.endsWith("/privacy") ||
+        path.endsWith("/privacy/") ||
+        fullUrl.includes("#privacy") ||
+        fullUrl.includes("#/privacy")
       ) {
         setActiveTab("portal");
         setLegalView("privacy");
       } else if (
-        hash === "#/terms" ||
-        hash === "#terms" ||
-        hash === "#/tos" ||
-        hash === "#tos" ||
-        path === "/terms" ||
+        hash.includes("terms") ||
+        hash.includes("tos") ||
         path.endsWith("/terms") ||
-        path === "/tos" ||
-        path.endsWith("/tos")
+        path.endsWith("/terms/") ||
+        path.endsWith("/tos") ||
+        path.endsWith("/tos/") ||
+        fullUrl.includes("#terms") ||
+        fullUrl.includes("#/terms") ||
+        fullUrl.includes("#tos") ||
+        fullUrl.includes("#/tos")
       ) {
         setActiveTab("portal");
         setLegalView("terms");

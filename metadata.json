@@ -1,0 +1,6 @@
+{
+  "name": "CasinoForge Website",
+  "description": "The official landing page, privacy policy, and terms of service for CasinoForge-Bot — the ultimate virtual casino and item forging Discord companion.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
